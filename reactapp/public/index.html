@@ -11,39 +11,61 @@
 <body>
   <h1 class="bg-primary text-white display-4">React</h1>
   <div class="container mt-3">
-    <form>
-      <div class="form-group">
-        <label for="id">account</label>
-        <input type="email" class="form-control" id="id">
-      </div>
-      <div class="form-group">
-        <label for="pass">password</label>
-        <input type="password" class="form-control" id="pass">
-      </div>
-      <div class="form-check">
-        <input type="checkbox" class="form-check-input" id="check">
-        <label class="form-check-label" for="check">checkbox</label>
-      </div>
-      <div class="form-check">
-        <input type="radio" class="form-check-input" id="rb1" name="rb">
-        <label class="form-check-label" for="rb1">radio1</label>
-      </div>
-      <div class="form-check">
-        <input type="radio" class="form-check-input" id="rb2" name="rb">
-        <label class="form-check-label" for="rb2">radio2</label>
-      </div>
-    </form>
-    <table class="table">
-      <thead class="thead-dark">
-        <tr><th>ID</th><th>Name</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>1</td><td>Yamada-Taro</td></tr>
-        <tr><td>2</td><td>Yamada-Jiro</td></tr>
-        <tr><td>3</td><td>Yamada-Saburo</td></tr>
-      </tbody>
-    </table>
+    <div id="root">wait...</div>
   </div>
-  <script src="./script.tsx"></script>
+  <script type="text/babel">
+    let dom = document.querySelector("#root")
+
+    let title = "新タイトル"
+    let message = "メッセージを表示します"
+    let content_true = "※これが、trueの時に表示される。"
+    let content_false = "※これが、falseの時に表示される。"
+
+    let data = [
+      {name: "Yamada", mail:"yamada@test.com", age:"20"},
+      {name: "sato", mail:"sato@test.com", age:"21"},
+      {name: "ishii", mail:"ishii@test.com", age:"22"},
+      {name: "okada", mail:"okada@test.com", age:"23"}
+    ]
+
+    let flg = true;
+
+
+    let el = (
+      <div className="alert alert-primary">
+        <h2>{title}</h2>
+        <h6>{message}</h6>
+        {flg ?
+          <div className="alert alert-primary mt-3">
+            <p>{content_true}</p>  
+          </div>
+        :
+          <div className="alert alert-primary mt-3">
+            <p>{content_false}</p>  
+          </div>
+        }
+        <table className="table table-striped mt-4">
+          <thead className="thead-dark">
+            <tr>
+              <th>name</th>
+              <th>mail</th>
+              <th>age</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((value) => (
+              <tr>
+                <td>{value.name}</td>
+                <td>{value.mail}</td>
+                <td>{value.age}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    )
+
+    ReactDOM.render(el, dom)
+  </script>
 </body>
 </html>
