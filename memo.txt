@@ -39,4 +39,7 @@ react
     └── yarn.lock
 
 ##コンテナに入る
-docker exec -i -t react_node_1 bash
+docker exec -it reactjs-nextjs-nyumon_node_1 bash
+
+##package系参考
+https://qiita.com/sunnyG/items/05c2e9381d6ba2d9fccf
