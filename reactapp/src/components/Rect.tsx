@@ -1,11 +1,20 @@
 import React, { Component } from "react"
 
-class Rect extends Component {
-    x = 0
-    y = 0
-    width = 0
-    height = 0
-    radius = 0
+interface ISquareProps {
+    x: string;
+    y: string;
+    w: string;
+    h: string;
+    r: string;
+    c: string;
+  }
+
+class Rect extends React.Component<ISquareProps, {}> {
+    x = "0"
+    y = "0"
+    width = "0"
+    height = "0"
+    radius = "0"
     color = "white"
     style = {}
 
@@ -32,3 +41,5 @@ class Rect extends Component {
         return <div style={this.style}></div>
     }
 }
+
+export default Rect
