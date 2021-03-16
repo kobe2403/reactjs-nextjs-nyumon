@@ -7,7 +7,7 @@ interface ISquareProps {
     h: string;
     r: string;
     c: string;
-  }
+}
 
 class Rect extends React.Component<ISquareProps, {}> {
     x = "0"
