@@ -4,77 +4,59 @@ import "./App.css"
 import Rect from "./components/Rect"
 
 
-class App extends Component<{}, {}> {
-    data:string[] = [
-       "This is list sample.",
-       "これはリストのサンプルです。",
-       "配列をリストに変換します。" 
-    ];
+class App extends Component<any, {}> {
+    input = "";
 
     constructor(props:any) {
-        super(props);
-        this.state = {
-            list: this.data,
-        }
+        super(props)
     }
 
     render() {
         return <div>
             <h1 className="bg-primary text-white display-4">React</h1>
             <div className="container">
-                <p className="subtitle">Show list.</p>
-                <List title="サンプルリスト" data={this.data} />
+                <Message title="Children!!" >
+                    あああああああああああああああ。
+                    あああああああああああああああ。
+                    あああああああああああああああ。
+                </Message>
             </div>
         </div>
     }
 }
 
-class List extends Component<{title: string,data: string[]}, {}> {
-    number = 1;
-
-    render() {
-        let data = this.props.data;
-
-        return (
-            <div>
-                <p className="h5 text-center">{this.props.title}</p>
-                <ul className="list-group">
-                    {data.map((item, key) => 
-                        <li className="list-group-item" key={key}>
-                            <Item number={key + 1} value={item} />
-                        </li>
-                    )}
-                </ul>
-            </div>
-        )
-    }
-}
-
-
-class Item extends Component<{number: number,value: string}, {}> {
-    itm:Object = {
-        fontSize: "16px",
-        color: "#00f",
-        textDecoration: "underline",
-        textDecorationColor: "#ddf",
-    }
-
-    num:Object = {
+class Message extends Component<{title:string}, {value:string, key:string}> {
+    li:object = {
+        fontSize: "14pt",
         fontWeight: "bold",
-        color: "red",
+        color: "#090",
     }
 
     render() {
-        return (
-            <p style={this.itm}>
-                <span style={this.num}>
-                    [{this.props.number}]&nbsp;
-                </span>
-                {this.props.value}
-            </p>
-        )
-    }
+        let content:any = this.props.children;
+        let arr:any;
+        if (content){
+            arr = content.split("。");
+        }
+        let arr2:any = [];
+        for (let i = 0; i < arr.length; i++){
+            if (arr[i].trim() != ""){
+                arr2.push(arr[i]);
+            }
+        }
+        let list = arr2.map((value:string, key:string) =>(
+            <li className="list-group-item" style={this.li}
+                key={key}>
+                    {key + 1} . {value}.
+            </li>
+        ));
 
+        return <div>
+            <h2>{this.props.title}</h2>
+            <ol className="list-group">{list}</ol>
+        </div>
+    }
 }
+
 
 export default App
