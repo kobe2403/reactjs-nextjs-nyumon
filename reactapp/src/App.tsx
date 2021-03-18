@@ -1,7 +1,6 @@
 import { render } from "@testing-library/react";
 import React, {Component} from "react"
 import "./App.css"
-import Rect from "./components/Rect"
 
 let data = {
     title: "React-context",
@@ -11,10 +10,23 @@ let data = {
 const SampleContext = React.createContext(data);
 
 class App extends Component<{}, {}> {
+    newdata = {
+        title: "new title",
+        message: "new message",
+    }
+
     render() {
         return <div>
             <h1 className="bg-primary text-white display-4">React</h1>
             <div className="container">
+                <Title />
+                <Message />
+                <hr />
+                <SampleContext.Provider value={this.newdata}>
+                    <Title />
+                    <Message />
+                </SampleContext.Provider>
+                <hr />
                 <Title />
                 <Message />
             </div>
