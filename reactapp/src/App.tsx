@@ -1,69 +1,50 @@
 import { render } from "@testing-library/react";
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import "./App.css"
 
 function AlertMessage(props:any) {
-    const data = props.data;
-    const msg = JSON.stringify(data);//JSON型にして送信
-
-    //戻り値
-    return <div className="alert alert-primary h5 text-primary">
-        <h5>{msg}</h5>
-        <hr />
-        <table className="table h6">
-            <tbody>
-                <tr><th>Name</th><td>{data.name}</td></tr>
-                <tr><th>Mail</th><td>{data.mail}</td></tr>
-                <tr><th>Age</th><td>{data.age}</td></tr>
-            </tbody>
-        </table>
+    return <div className="alert alert-primary">
+        {props.msg}
     </div>
 }
 
 function App() {
-    const [name, setName] = useState("no name");
-    const [mail, setMail] = useState("no mail");
-    const [age, setAge] = useState(0);
-    const [form, setForm] = useState({name: "no name", mail: "no mail", age:0});//フォームの値を保持
+    const [val, setVal] = useState(0);
+    const [tax1, setTax1] = useState(0);
+    const [tax2, setTax2] = useState(0);
+    const [msg, setMsg] = useState(<p>set a price...</p>);
 
-    const doChangeName = (e:any) => {
-        setName(e.target.value);
-    };
+    const doChange = (event:any) => {
+        setVal(event.target.value);
+    }
 
-    const doChangeMail = (e:any) => {
-        setMail(e.target.value);
-    };
+    //valの値を更新しているだけ（side-effectの使用）
+    useEffect(() => {
+        let res = <div>
+            <p>軽減税率(8%) : {tax1}円</p>
+            <p>軽減税率(10%) : {tax2}円</p>
+        </div>
+        setMsg(res);
+    }, [tax1,tax2])
 
-    const doChangeAge = (e:any) => {
-        setAge(e.target.value);
-    };
+    useEffect(() => {
+        setTax1(Math.floor(val * 1.08));
+    })
 
-    const doSubmit = (e:any) => {
-        setForm({name:name, mail:mail, age:age});
-        e.preventDefault();//submitイベントの発生元であるフォームが持つデフォルトの動作をキャンセルするメソッド。
-    };
+    useEffect(() => {
+        setTax2(Math.floor(val * 1.1));
+    })
 
     return (
         <div>
             <h1 className="bg-primary text-white display-4">React</h1>
             <div className="container">
                 <h4 className="my-3">Hooks sample</h4>
-                <AlertMessage data={form} setData={setForm} />
-                <form onSubmit={doSubmit}>
-                    <div className="form-group">
-                        <label>Name:</label>
-                        <input type="text" className="form-control" onChange={doChangeName} />
-                    </div>
-                    <div className="form-group">
-                        <label>Mail:</label>
-                        <input type="text" className="form-control" onChange={doChangeMail} />
-                    </div>
-                    <div className="form-group">
-                        <label>Age:</label>
-                        <input type="text" className="form-control" onChange={doChangeAge} />
-                    </div>
-                    <input type="submit" className="btn btn-primary" onChange={doSubmit} value="Click" />
-                </form>
+                <AlertMessage msg={msg} />
+                <div className="form-group">
+                    <label>Input:</label>
+                    <input type="number" className="form-control" onChange={doChange} />
+                </div>
             </div>
         </div>
     )
