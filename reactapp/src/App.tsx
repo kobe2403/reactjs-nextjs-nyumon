@@ -2,49 +2,41 @@ import { render } from "@testing-library/react";
 import React, {useEffect, useState} from "react"
 import "./App.css"
 
-function AlertMessage(props:any) {
-    return <div className="alert alert-primary">
-        {props.msg}
-    </div>
+/**
+ * 独自ステート
+ * use〇〇で勝手にフックだと判断してくれる
+ * const [変数, 関数] = useState(初期値);
+ * const 関数
+ * return 値
+ */
+function useCounter() {
+    const [num, setNum] = useState(0);//初期値は0、変数はnum、変更は関数setNumで行う。
+    //独自フックの関数
+    const count = () => {
+        setNum(num + 1);//ステートの変数numに＋１する。これをsetNum関数でnumに上書き
+    }
+
+    return [num, count];//ステートの値を得るものnumと数字を1増やす関数countを返す。
+}
+
+function AlertMessage() {
+    const [counter, plus] = useCounter();
+    return (
+        <div className="alert alert-primary h5 text-center">
+            <h4>Count:{counter}</h4>
+            {/**plusの型をanyで対応 */}
+            <button onClick={plus as any} className="btn btn-primary">count</button>
+        </div>
+    )
 }
 
 function App() {
-    const [val, setVal] = useState(0);
-    const [tax1, setTax1] = useState(0);
-    const [tax2, setTax2] = useState(0);
-    const [msg, setMsg] = useState(<p>set a price...</p>);
-
-    const doChange = (event:any) => {
-        setVal(event.target.value);
-    }
-
-    //valの値を更新しているだけ（side-effectの使用）
-    useEffect(() => {
-        let res = <div>
-            <p>軽減税率(8%) : {tax1}円</p>
-            <p>軽減税率(10%) : {tax2}円</p>
-        </div>
-        setMsg(res);
-    }, [tax1,tax2])
-
-    useEffect(() => {
-        setTax1(Math.floor(val * 1.08));
-    })
-
-    useEffect(() => {
-        setTax2(Math.floor(val * 1.1));
-    })
-
     return (
         <div>
             <h1 className="bg-primary text-white display-4">React</h1>
             <div className="container">
                 <h4 className="my-3">Hooks sample</h4>
-                <AlertMessage msg={msg} />
-                <div className="form-group">
-                    <label>Input:</label>
-                    <input type="number" className="form-control" onChange={doChange} />
-                </div>
+                <AlertMessage />
             </div>
         </div>
     )
