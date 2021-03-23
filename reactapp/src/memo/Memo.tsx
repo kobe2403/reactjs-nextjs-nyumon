@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react"
+//import React, {useState, useEffect} from "react"
 import usePersist from "../Persist"
 import Item from "./Item"
 
@@ -24,6 +24,7 @@ function  Memo() {
             data = memo.map((value:any, key:any) => {
                 <Item key={value.message} value={value} index={key + 1} />
             });
+            break;
     }
 
     return (

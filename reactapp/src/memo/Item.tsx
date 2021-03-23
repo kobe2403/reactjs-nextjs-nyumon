@@ -1,5 +1,3 @@
-import React, {useState, useEffect} from "react"
-
 function Item(props:any) {
     const th:object = {
         width: "100px",
